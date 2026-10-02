@@ -1,0 +1,6 @@
+{
+  "name": "School Management System - نظام إدارة المدارس",
+  "description": "نظام متكامل واحترافي لإدارة المدارس متعددة الفروع مع دعم اللغتين العربية والإنجليزية والوضعين الفاتح والداكن ومساعد ذكي.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
