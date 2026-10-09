@@ -107,7 +107,7 @@ export const AIAssistantModal: React.FC<AIAssistantModalProps> = ({
         </div>
       }
     >
-      <div className="flex flex-col h-[65vh] min-h-[460px] -mx-4 -my-4 sm:-mx-6 sm:-my-6">
+      <div className="flex flex-col h-[65vh] min-h-[350px] sm:min-h-[460px] max-h-[calc(100dvh-8rem)] -mx-3.5 -my-3.5 sm:-mx-5 sm:-my-5">
         {/* Messages */}
         <AIChatWindow
           messages={messages}

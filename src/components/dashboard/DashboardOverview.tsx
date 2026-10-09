@@ -191,12 +191,12 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({
   return (
     <div className="space-y-6 print:space-y-4">
       {/* Top Welcome & Operational Command Hero Banner */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-blue-700 via-indigo-700 to-indigo-800 dark:from-blue-950 dark:via-indigo-950 dark:to-slate-900 text-white p-6 sm:p-7 shadow-sm border border-blue-600/30">
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-blue-700 via-indigo-700 to-indigo-800 dark:from-blue-950 dark:via-indigo-950 dark:to-slate-900 text-white p-4 sm:p-6 lg:p-7 shadow-sm border border-blue-600/30">
         {/* Subtle decorative glow */}
         <div className="absolute -end-10 -bottom-10 w-64 h-64 bg-white/10 rounded-full blur-2xl pointer-events-none" />
         <div className="absolute start-1/3 -top-12 w-48 h-48 bg-blue-400/20 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-5 sm:gap-6">
           <div className="space-y-2 max-w-2xl">
             <div className="flex flex-wrap items-center gap-2">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-white/20 backdrop-blur-md text-white border border-white/20">
@@ -211,7 +211,7 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({
               </span>
             </div>
 
-            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight">
               مركز العمليات والمؤشرات التشغيلية للمدرسة
             </h2>
 

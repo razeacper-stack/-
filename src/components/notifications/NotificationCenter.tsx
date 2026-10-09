@@ -426,7 +426,7 @@ export const NotificationCenter: React.FC<NotificationCenterProps> = ({
       </div>
 
       {/* Category Pills */}
-      <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs">
+      <div className="flex items-center gap-1.5 overflow-x-auto pb-1.5 text-xs scrollbar-thin">
         {[
           { id: 'ALL', labelAr: 'الكل', labelEn: 'All' },
           { id: 'ATTENDANCE', labelAr: 'الحضور والغياب', labelEn: 'Attendance' },
@@ -441,7 +441,7 @@ export const NotificationCenter: React.FC<NotificationCenterProps> = ({
             key={cat.id}
             type="button"
             onClick={() => setSelectedType(cat.id as any)}
-            className={`px-3 py-1.5 rounded-xl font-semibold transition-all cursor-pointer shrink-0 ${
+            className={`px-3 py-1.5 rounded-xl font-semibold transition-all cursor-pointer shrink-0 whitespace-nowrap ${
               selectedType === cat.id
                 ? 'bg-blue-600 text-white shadow-2xs'
                 : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
@@ -594,9 +594,9 @@ export const NotificationCenter: React.FC<NotificationCenterProps> = ({
   // If page view: render full-page container
   if (isPageView) {
     return (
-      <div className="p-4 sm:p-6 max-w-7xl mx-auto space-y-6 animate-in fade-in duration-200">
+      <div className="space-y-5 animate-in fade-in duration-200">
         {/* Page Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200 dark:border-slate-800">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-200 dark:border-slate-800">
           <div className="flex items-center gap-3">
             <div className="p-3 rounded-2xl bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 shadow-2xs">
               <Bell className="w-6 h-6" />
@@ -679,21 +679,23 @@ export const NotificationCenter: React.FC<NotificationCenterProps> = ({
         }
         size="xl"
         footer={
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 w-full">
-            <div className="flex items-center gap-2 text-xs text-slate-500 flex-wrap">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 w-full">
+            <div className="flex items-center gap-2 text-xs text-slate-500 flex-wrap justify-between sm:justify-start">
               <span>{notifications.length} إشعار مسجل</span>
-              {unreadCount > 0 && (
-                <Badge variant="primary" size="sm">
-                  {unreadCount} غير مقروء
-                </Badge>
-              )}
-              {readCount > 0 && (
-                <Badge variant="neutral" size="sm">
-                  {readCount} مقروء
-                </Badge>
-              )}
+              <div className="flex items-center gap-1.5">
+                {unreadCount > 0 && (
+                  <Badge variant="primary" size="sm">
+                    {unreadCount} غير مقروء
+                  </Badge>
+                )}
+                {readCount > 0 && (
+                  <Badge variant="neutral" size="sm">
+                    {readCount} مقروء
+                  </Badge>
+                )}
+              </div>
             </div>
-            <div className="flex items-center gap-2 flex-wrap">
+            <div className="flex items-center gap-1.5 flex-wrap justify-end">
               {unreadCount > 0 && (
                 <Button variant="outline" size="sm" onClick={handleMarkAllAsRead} leftIcon={<CheckCheck className="w-4 h-4" />}>
                   {language === 'ar' ? 'قراءة الكل' : 'Mark all read'}

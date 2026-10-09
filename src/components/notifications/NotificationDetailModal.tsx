@@ -150,9 +150,9 @@ export const NotificationDetailModal: React.FC<NotificationDetailModalProps> = (
       }
       size="lg"
       footer={
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 w-full">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 w-full">
           {/* Quick Actions */}
-          <div className="flex items-center gap-2 flex-wrap">
+          <div className="flex items-center gap-1.5 flex-wrap">
             <Button
               variant="outline"
               size="sm"

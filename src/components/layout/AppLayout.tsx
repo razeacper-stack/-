@@ -60,12 +60,12 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
         />
 
         {/* Subheader / Breadcrumbs bar */}
-        <div className="px-4 sm:px-6 py-2.5 bg-white/50 dark:bg-slate-900/50 border-b border-slate-200/50 dark:border-slate-800/50">
+        <div className="px-3.5 sm:px-6 py-2 bg-white/50 dark:bg-slate-900/50 border-b border-slate-200/50 dark:border-slate-800/50 overflow-x-auto">
           <Breadcrumb items={breadcrumbs} />
         </div>
 
         {/* Scrollable Viewport */}
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto">
+        <main className="flex-1 p-3.5 sm:p-5 lg:p-7 max-w-7xl 2xl:max-w-(--breakpoint-2xl) w-full mx-auto min-w-0">
           {children}
         </main>
       </div>

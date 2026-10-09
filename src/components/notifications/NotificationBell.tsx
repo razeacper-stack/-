@@ -165,7 +165,7 @@ export const NotificationBell: React.FC<NotificationBellProps> = ({
       </button>
 
       {isOpen && (
-        <div className="absolute end-0 mt-2 w-84 sm:w-96 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl p-4 z-50 animate-in fade-in zoom-in-95 duration-150">
+        <div className="fixed sm:absolute inset-x-2 sm:inset-x-auto sm:end-0 top-16 sm:top-auto sm:mt-2 w-auto sm:w-96 max-w-[calc(100vw-1rem)] sm:max-w-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl p-3.5 sm:p-4 z-50 animate-in fade-in zoom-in-95 duration-150">
           {/* Header */}
           <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
             <div className="flex items-center gap-2">
@@ -248,7 +248,7 @@ export const NotificationBell: React.FC<NotificationBellProps> = ({
           </div>
 
           {/* Notification List */}
-          <div className="max-h-80 overflow-y-auto space-y-2.5 pe-1">
+          <div className="max-h-[55vh] sm:max-h-80 overflow-y-auto space-y-2.5 pe-1">
             {filteredNotifications.length === 0 ? (
               <div className="py-10 text-center text-slate-400 text-xs">
                 <Bell className="w-8 h-8 mx-auto mb-2 opacity-40" />
@@ -271,7 +271,7 @@ export const NotificationBell: React.FC<NotificationBellProps> = ({
 
           {/* Footer */}
           {onOpenFullCenter && (
-            <div className="pt-3 mt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-2">
+            <div className="pt-3 mt-3 border-t border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
               <span className="text-[11px] text-slate-400 font-medium">
                 {language === 'ar' ? 'انقر على أي إشعار لفتحه وقراءته' : 'Click any notification to read'}
               </span>
@@ -280,7 +280,7 @@ export const NotificationBell: React.FC<NotificationBellProps> = ({
                   setIsOpen(false);
                   onOpenFullCenter();
                 }}
-                className="flex items-center gap-1.5 py-1 px-2.5 rounded-xl text-xs font-bold text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/40 transition-colors cursor-pointer"
+                className="flex items-center gap-1.5 py-1 px-2.5 rounded-xl text-xs font-bold text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/40 transition-colors cursor-pointer self-end sm:self-auto"
               >
                 <span>{language === 'ar' ? 'عرض مركز الإشعارات الكامل' : 'Open Full Center'}</span>
                 <ExternalLink className="w-3.5 h-3.5" />

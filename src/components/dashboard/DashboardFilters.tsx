@@ -53,9 +53,9 @@ export const DashboardFilters: React.FC<DashboardFiltersProps> = ({
   };
 
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 p-3.5 shadow-xs flex flex-wrap items-center justify-between gap-3">
+    <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 p-3 sm:p-3.5 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
       {/* Filters Group */}
-      <div className="flex flex-wrap items-center gap-2.5">
+      <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 w-full sm:w-auto">
         {/* Branch Filter (if allowed) */}
         {canViewCrossBranch && (
           <div className="flex items-center gap-1.5 bg-slate-50 dark:bg-slate-800/80 px-2.5 py-1.5 rounded-xl border border-slate-200/60 dark:border-slate-700/60">
@@ -126,7 +126,7 @@ export const DashboardFilters: React.FC<DashboardFiltersProps> = ({
       </div>
 
       {/* Action Buttons: Refresh, Print, Export */}
-      <div className="flex items-center gap-1.5">
+      <div className="flex items-center gap-1.5 flex-wrap self-end sm:self-auto">
         <Button
           variant="outline"
           size="sm"

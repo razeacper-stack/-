@@ -13,6 +13,7 @@ import {
   User as UserIcon,
   Bot,
   Settings,
+  Search,
 } from 'lucide-react';
 import { useTranslation } from '../../context/LanguageContext';
 import { useTheme } from '../../context/ThemeContext';
@@ -89,7 +90,7 @@ export const Header: React.FC<HeaderProps> = ({
     <header className="sticky top-0 z-30 h-16 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800 transition-colors">
       <div className="h-full px-4 sm:px-6 flex items-center justify-between gap-3">
         {/* Left Section: Mobile Menu + Branch Selector */}
-        <div className="flex items-center gap-2 sm:gap-3">
+        <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
           {/* Mobile hamburger */}
           <button
             onClick={onToggleMobileMenu}
@@ -103,10 +104,10 @@ export const Header: React.FC<HeaderProps> = ({
           <div className="relative" ref={branchRef}>
             <button
               onClick={() => setIsBranchDropdownOpen(!isBranchDropdownOpen)}
-              className="flex items-center gap-2 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs sm:text-sm font-medium text-slate-800 dark:text-slate-100 transition-all cursor-pointer"
+              className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs sm:text-sm font-medium text-slate-800 dark:text-slate-100 transition-all cursor-pointer"
             >
               <Building2 className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0" />
-              <span className="max-w-[120px] sm:max-w-[190px] truncate">
+              <span className="max-w-[75px] min-[400px]:max-w-[110px] sm:max-w-[180px] md:max-w-[220px] truncate">
                 {accessibleBranches.length === 0
                   ? (language === 'ar' ? 'بدون مدرسة مسجلة' : 'No Schools')
                   : isAllBranches
@@ -120,7 +121,7 @@ export const Header: React.FC<HeaderProps> = ({
 
             {/* Branch dropdown menu */}
             {isBranchDropdownOpen && (
-              <div className="absolute start-0 mt-2 w-72 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl py-2 z-50 animate-in fade-in zoom-in-95 duration-100">
+              <div className="absolute start-0 mt-2 w-72 max-w-[calc(100vw-2rem)] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl py-2 z-50 animate-in fade-in zoom-in-95 duration-100">
                 <div className="px-3 py-1.5 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
                   {t('branch.select')}
                 </div>
@@ -212,23 +213,34 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
         </div>
 
-        {/* Center: Quick Search Bar (visible on md+) */}
-        <div className="hidden md:block flex-1 max-w-md mx-2">
+        {/* Center: Quick Search Bar (visible on lg+) */}
+        <div className="hidden lg:block flex-1 max-w-xs xl:max-w-md mx-2">
           <SearchBar onClick={onOpenSearchModal} />
         </div>
 
-        {/* Right Section: Phase 1 Test Guide, Language, Theme, Notifications, User */}
-        <div className="flex items-center gap-1.5 sm:gap-2.5">
+        {/* Right Section: Mobile Search, AI, Guide, Language, Theme, Notifications, User */}
+        <div className="flex items-center gap-1 sm:gap-1.5 md:gap-2">
+          {/* Quick Search Icon Launcher on mobile/tablet (< lg) */}
+          {onOpenSearchModal && (
+            <button
+              onClick={onOpenSearchModal}
+              className="lg:hidden p-2 rounded-xl border border-slate-200 dark:border-slate-700/80 bg-white dark:bg-slate-800/80 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 transition-colors cursor-pointer shadow-2xs"
+              title={language === 'ar' ? 'البحث السريع (Ctrl+K)' : 'Search (Ctrl+K)'}
+              aria-label="Search"
+            >
+              <Search className="w-4 h-4 text-slate-600 dark:text-slate-300" />
+            </button>
+          )}
+
           {/* AI Smart Assistant Quick Launcher */}
           {onOpenAIModal && (
             <button
               onClick={onOpenAIModal}
-              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-xs font-semibold shadow-xs transition-all cursor-pointer"
+              className="flex items-center gap-1.5 p-2 sm:px-2.5 sm:py-1.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-xs font-semibold shadow-xs transition-all cursor-pointer"
               title={language === 'ar' ? 'المساعد الذكي (Ctrl+J)' : 'AI Assistant (Ctrl+J)'}
             >
-              <Bot className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">{language === 'ar' ? 'المساعد الذكي' : 'AI Assistant'}</span>
-              <span className="sm:hidden text-[10px]">AI</span>
+              <Bot className="w-4 h-4 sm:w-3.5 sm:h-3.5" />
+              <span className="hidden md:inline">{language === 'ar' ? 'المساعد الذكي' : 'AI Assistant'}</span>
             </button>
           )}
 
@@ -236,7 +248,7 @@ export const Header: React.FC<HeaderProps> = ({
           {onOpenPhase12Modal && (
             <button
               onClick={onOpenPhase12Modal}
-              className="hidden lg:flex items-center gap-1.5 px-2 py-1.5 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 hover:bg-indigo-100 text-xs font-semibold border border-indigo-200/80 dark:border-indigo-800 transition-colors cursor-pointer shadow-2xs"
+              className="hidden xl:flex items-center gap-1.5 px-2 py-1.5 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 hover:bg-indigo-100 text-xs font-semibold border border-indigo-200/80 dark:border-indigo-800 transition-colors cursor-pointer shadow-2xs"
               title="التحقق من المرحلة 12 (المساعد الذكي)"
             >
               <Sparkles className="w-3 h-3 text-indigo-600 dark:text-indigo-400" />
@@ -248,7 +260,7 @@ export const Header: React.FC<HeaderProps> = ({
           {onOpenPhase13Modal && (
             <button
               onClick={onOpenPhase13Modal}
-              className="hidden lg:flex items-center gap-1.5 px-2 py-1.5 rounded-xl bg-purple-50 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 hover:bg-purple-100 text-xs font-semibold border border-purple-200/80 dark:border-purple-800 transition-colors cursor-pointer shadow-2xs"
+              className="hidden xl:flex items-center gap-1.5 px-2 py-1.5 rounded-xl bg-purple-50 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 hover:bg-purple-100 text-xs font-semibold border border-purple-200/80 dark:border-purple-800 transition-colors cursor-pointer shadow-2xs"
               title="التحقق من المرحلة 13 (الإشعارات وسجل النشاط)"
             >
               <Sparkles className="w-3 h-3 text-purple-600 dark:text-purple-400" />
@@ -259,39 +271,40 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Phase 1 Verification Quick Launch Button */}
           <button
             onClick={onOpenTestModal}
-            className="hidden xl:flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-900/60 text-xs font-medium border border-blue-200/60 dark:border-blue-800 transition-colors cursor-pointer shadow-2xs"
+            className="hidden 2xl:flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-900/60 text-xs font-medium border border-blue-200/60 dark:border-blue-800 transition-colors cursor-pointer shadow-2xs"
             title="دليل اختبار المرحلة الأولى"
           >
             <Sparkles className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
             <span>{t('phase1.test_button')}</span>
           </button>
 
-          {/* Single Language Switcher (زر واحد فقط للتبديل بين اللغتين) */}
+          {/* Single Language Switcher */}
           <button
             onClick={toggleLanguage}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700/80 bg-white dark:bg-slate-800/80 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-semibold text-slate-700 dark:text-slate-200 transition-colors cursor-pointer shadow-2xs"
+            className="flex items-center gap-1.5 p-2 sm:px-2.5 sm:py-1.5 rounded-xl border border-slate-200 dark:border-slate-700/80 bg-white dark:bg-slate-800/80 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-semibold text-slate-700 dark:text-slate-200 transition-colors cursor-pointer shadow-2xs"
             title={language === 'ar' ? 'التحويل إلى English' : 'التحويل إلى العربية'}
           >
-            <Globe className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
-            <span>{language === 'ar' ? 'English' : 'العربية'}</span>
+            <Globe className="w-4 h-4 sm:w-3.5 sm:h-3.5 text-blue-600 dark:text-blue-400" />
+            <span className="hidden xl:inline">{language === 'ar' ? 'English' : 'العربية'}</span>
+            <span className="xl:hidden text-[11px] font-bold">{language === 'ar' ? 'EN' : 'ع'}</span>
           </button>
 
-          {/* Single Theme Switcher (زر واحد فقط للتبديل المباشر بين الفاتح والداكن) */}
+          {/* Single Theme Switcher */}
           <button
             onClick={toggleTheme}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700/80 bg-white dark:bg-slate-800/80 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-semibold text-slate-700 dark:text-slate-200 transition-colors cursor-pointer shadow-2xs"
+            className="flex items-center gap-1.5 p-2 sm:px-2.5 sm:py-1.5 rounded-xl border border-slate-200 dark:border-slate-700/80 bg-white dark:bg-slate-800/80 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-semibold text-slate-700 dark:text-slate-200 transition-colors cursor-pointer shadow-2xs"
             title={resolvedTheme === 'dark' ? (language === 'ar' ? 'التحويل إلى الوضع الفاتح' : 'Switch to Light Mode') : (language === 'ar' ? 'التحويل إلى الوضع الداكن' : 'Switch to Dark Mode')}
             aria-label="Toggle theme"
           >
             {resolvedTheme === 'dark' ? (
               <>
-                <Sun className="w-3.5 h-3.5 text-amber-400" />
-                <span className="hidden sm:inline">{language === 'ar' ? 'فاتح' : 'Light'}</span>
+                <Sun className="w-4 h-4 sm:w-3.5 sm:h-3.5 text-amber-400" />
+                <span className="hidden xl:inline">{language === 'ar' ? 'فاتح' : 'Light'}</span>
               </>
             ) : (
               <>
-                <Moon className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
-                <span className="hidden sm:inline">{language === 'ar' ? 'داكن' : 'Dark'}</span>
+                <Moon className="w-4 h-4 sm:w-3.5 sm:h-3.5 text-blue-600 dark:text-blue-400" />
+                <span className="hidden xl:inline">{language === 'ar' ? 'داكن' : 'Dark'}</span>
               </>
             )}
           </button>
@@ -325,7 +338,7 @@ export const Header: React.FC<HeaderProps> = ({
             </button>
 
             {isUserMenuOpen && (
-              <div className="absolute end-0 mt-2 w-56 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl py-2 z-50 animate-in fade-in zoom-in-95 duration-100">
+              <div className="absolute end-0 mt-2 w-56 max-w-[calc(100vw-2rem)] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl py-2 z-50 animate-in fade-in zoom-in-95 duration-100">
                 <div className="px-3.5 py-2 border-b border-slate-100 dark:border-slate-800">
                   <div className="text-xs font-bold text-slate-900 dark:text-slate-100 truncate">
                     {currentUser?.fullName}
