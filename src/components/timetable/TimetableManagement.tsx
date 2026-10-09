@@ -89,7 +89,7 @@ export const TimetableManagement: React.FC = () => {
   const [selectedBranchId, setSelectedBranchId] = useState<string>(
     activeBranchId && activeBranchId !== 'all'
       ? activeBranchId
-      : availableBranches[0]?.id || 'branch-riyadh'
+      : availableBranches[0]?.id || ''
   );
 
   // Sync selected branch if activeBranchId changes and is not 'all'

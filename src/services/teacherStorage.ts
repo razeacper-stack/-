@@ -532,16 +532,16 @@ export class TeacherStorageService {
     if (this.initialized) return;
 
     if (!localStorage.getItem(TEACHERS_STORAGE_KEY)) {
-      localStorage.setItem(TEACHERS_STORAGE_KEY, JSON.stringify(SEEDED_TEACHERS));
+      localStorage.setItem(TEACHERS_STORAGE_KEY, JSON.stringify([]));
     }
     if (!localStorage.getItem(TEACHER_QUALIFICATIONS_STORAGE_KEY)) {
-      localStorage.setItem(TEACHER_QUALIFICATIONS_STORAGE_KEY, JSON.stringify(SEEDED_QUALIFICATIONS));
+      localStorage.setItem(TEACHER_QUALIFICATIONS_STORAGE_KEY, JSON.stringify([]));
     }
     if (!localStorage.getItem(TEACHER_SUBJECTS_STORAGE_KEY)) {
-      localStorage.setItem(TEACHER_SUBJECTS_STORAGE_KEY, JSON.stringify(SEEDED_TEACHER_SUBJECTS));
+      localStorage.setItem(TEACHER_SUBJECTS_STORAGE_KEY, JSON.stringify([]));
     }
     if (!localStorage.getItem(TEACHER_CLASSES_STORAGE_KEY)) {
-      localStorage.setItem(TEACHER_CLASSES_STORAGE_KEY, JSON.stringify(SEEDED_TEACHER_CLASSES));
+      localStorage.setItem(TEACHER_CLASSES_STORAGE_KEY, JSON.stringify([]));
     }
 
     this.initialized = true;

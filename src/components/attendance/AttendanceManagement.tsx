@@ -88,7 +88,7 @@ export const AttendanceManagement: React.FC = () => {
   // Branch Selection
   const [selectedBranchId, setSelectedBranchId] = useState<string>(() => {
     if (activeBranchId && activeBranchId !== 'all') return activeBranchId;
-    return branches[0]?.id || 'branch-riyadh';
+    return branches[0]?.id || '';
   });
 
   useEffect(() => {

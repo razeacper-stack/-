@@ -1,7 +1,7 @@
 {
-  "name": "react-example",
+  "name": "school-management-system",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite --port=3000 --host=0.0.0.0",
@@ -9,24 +9,35 @@
     "preview": "vite preview",
     "clean": "rm -rf dist server.js",
     "lint": "tsc --noEmit",
-    "test": "npm run test:phase6 && npm run test:phase7 && npm run test:phase8",
+    "tauri": "tauri",
+    "test": "npm run test:phase6 && npm run test:phase7 && npm run test:phase8 && npm run test:phase9 && npm run test:phase10 && npm run test:phase11 && npm run test:phase12 && npm run test:phase13 && npm run test:phase14 && npm run test:phase15",
     "test:phase6": "tsx scripts/run_phase6_tests.ts",
     "test:phase7": "tsx scripts/run_phase7_tests.ts",
-    "test:phase8": "tsx scripts/run_phase8_tests.ts"
+    "test:phase8": "tsx scripts/run_phase8_tests.ts",
+    "test:phase9": "tsx scripts/run_phase9_tests.ts",
+    "test:phase10": "tsx scripts/run_phase10_tests.ts",
+    "test:phase11": "tsx scripts/run_phase11_tests.ts",
+    "test:phase12": "tsx scripts/run_phase12_tests.ts",
+    "test:phase13": "tsx scripts/run_phase13_tests.ts",
+    "test:phase14": "tsx scripts/run_phase14_tests.ts",
+    "test:phase15": "tsx scripts/run_phase15_tests.ts"
   },
   "dependencies": {
     "@google/genai": "^2.4.0",
     "@tailwindcss/vite": "^4.3.3",
+    "@tauri-apps/api": "^2.12.1",
     "@vitejs/plugin-react": "^6.1.1",
+    "dotenv": "^17.2.3",
+    "express": "^4.21.2",
     "lucide-react": "^0.546.0",
+    "motion": "^12.23.24",
     "react": "^19.0.1",
     "react-dom": "^19.0.1",
-    "vite": "^8.3.0",
-    "express": "^4.21.2",
-    "dotenv": "^17.2.3",
-    "motion": "^12.23.24"
+    "vite": "^8.3.0"
   },
   "devDependencies": {
+    "@tauri-apps/cli": "^2.12.1",
+    "@types/express": "^4.17.21",
     "@types/node": "^22.14.0",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
@@ -34,7 +45,6 @@
     "esbuild": "^0.25.0",
     "tailwindcss": "^4.3.3",
     "tsx": "^4.21.0",
-    "typescript": "^7.0.2",
-    "@types/express": "^4.17.21"
+    "typescript": "^7.0.2"
   }
 }

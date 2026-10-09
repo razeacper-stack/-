@@ -58,11 +58,13 @@ export const ar: Record<string, string> = {
   'nav.attendance': 'الحضور والغياب',
   'nav.fees': 'الرسوم والمستحقات',
   'nav.reports': 'التقارير والإحصائيات',
+  'nav.search': 'البحث الشامل',
   'nav.users': 'إدارة المستخدمين',
   'nav.roles': 'الأدوار ومصفوفة الصلاحيات',
+  'nav.notifications': 'مركز الإشعارات والتنبيهات',
   'nav.ai_assistant': 'المساعد الذكي AI',
   'nav.settings': 'إعدادات النظام',
-  'nav.audit_logs': 'سجل العمليات (Audit)',
+  'nav.audit_logs': 'مركز النشاط وسجل العمليات',
 
   // Categories in navigation
   'nav.group.main': 'الرئيسية',
@@ -183,4 +185,10 @@ export const ar: Record<string, string> = {
   'teachers.stats.archived': 'مؤرشف',
   'teachers.stats.full_time': 'دوام كامل',
   'teachers.stats.temporary': 'معلمو الحصص',
+
+  // Settings
+  'settings.title': 'إعدادات النظام العامة',
+  'settings.subtitle': 'تخصيص بيانات المدرسة، السنة الأكاديمية النشطة، والسياسات العامة',
+  'settings.save': 'حفظ الإعدادات',
+  'settings.back': 'العودة للوحة التحكم',
 };

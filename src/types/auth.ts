@@ -4,6 +4,9 @@
 
 export type StandardPermissionKey =
   | 'dashboard.view'
+  | 'dashboard.view_finance'
+  | 'dashboard.view_cross_branch'
+  | 'dashboard.view_activity'
   | 'branches.view'
   | 'branches.create'
   | 'branches.edit'
@@ -72,6 +75,22 @@ export type StandardPermissionKey =
   | 'fees.create'
   | 'fees.edit'
   | 'fees.delete'
+  | 'fees.manage_structures'
+  | 'fees.assign'
+  | 'fees.issue'
+  | 'fees.void'
+  | 'fees.apply_discount'
+  | 'fees.apply_scholarship'
+  | 'payments.view'
+  | 'payments.create'
+  | 'payments.edit'
+  | 'payments.delete'
+  | 'payments.refund'
+  | 'payments.approve_refund'
+  | 'payments.export'
+  | 'finance.view_reports'
+  | 'finance.export'
+  | 'finance.manage_settings'
   | 'reports.view'
   | 'reports.export'
   | 'reports.print'
@@ -81,11 +100,17 @@ export type StandardPermissionKey =
   | 'users.delete'
   | 'settings.view'
   | 'settings.edit'
-  | 'ai_assistant.use';
+  | 'ai_assistant.use'
+  | 'audit.view'
+  | 'audit.view_security'
+  | 'audit.view_finance'
+  | 'audit.view_ai'
+  | 'audit.export'
+  | 'notifications.view';
 
 export interface PermissionDefinition {
   key: StandardPermissionKey;
-  module: 'dashboard' | 'branches' | 'academic' | 'students' | 'teachers' | 'timetable' | 'attendance' | 'lessons' | 'fees' | 'reports' | 'users' | 'settings' | 'ai';
+  module: 'dashboard' | 'branches' | 'academic' | 'students' | 'teachers' | 'timetable' | 'attendance' | 'lessons' | 'fees' | 'reports' | 'users' | 'settings' | 'ai' | 'audit' | 'notifications';
   nameAr: string;
   nameEn: string;
   descriptionAr: string;
@@ -228,12 +253,54 @@ export interface AuditRecord {
     | 'ATTENDANCE_UNLOCKED'
     | 'ATTENDANCE_EXPORTED'
     | 'ATTENDANCE_CONFLICT_REJECTED'
-    | 'ATTENDANCE_UNAUTHORIZED_ATTEMPT';
-  targetType: 'USER' | 'ROLE' | 'SESSION' | 'SYSTEM' | 'BRANCH' | 'ACADEMIC' | 'STUDENT' | 'ENROLLMENT' | 'GUARDIAN' | 'TEACHER' | 'TIMETABLE' | 'PERIOD' | 'ROOM' | 'ATTENDANCE';
+    | 'ATTENDANCE_UNAUTHORIZED_ATTEMPT'
+    | 'FEE_STRUCTURE_CREATED'
+    | 'FEE_STRUCTURE_UPDATED'
+    | 'FEE_STRUCTURE_DEACTIVATED'
+    | 'FEE_ASSIGNED'
+    | 'FEE_ASSIGNMENT_UPDATED'
+    | 'INVOICE_CREATED'
+    | 'INVOICE_UPDATED'
+    | 'INVOICE_ISSUED'
+    | 'INVOICE_VOIDED'
+    | 'DISCOUNT_APPLIED'
+    | 'SCHOLARSHIP_APPLIED'
+    | 'PAYMENT_CREATED'
+    | 'PAYMENT_UPDATED'
+    | 'PAYMENT_VOIDED'
+    | 'REFUND_CREATED'
+    | 'REFUND_APPROVED'
+    | 'REFUND_PROCESSED'
+    | 'RECEIPT_PRINTED'
+    | 'FINANCIAL_REPORT_EXPORTED'
+    | 'FINANCIAL_UNAUTHORIZED_ATTEMPT'
+    | 'FINANCIAL_CROSS_BRANCH_REJECTED'
+    | 'GLOBAL_SEARCH_PERFORMED'
+    | 'REPORT_GENERATED'
+    | 'REPORT_EXPORTED'
+    | 'REPORT_PRINTED'
+    | 'REPORT_UNAUTHORIZED_ATTEMPT'
+    | 'AI_QUERY_EXECUTED'
+    | 'AI_TOOL_CALLED'
+    | 'AI_UNAUTHORIZED_REQUEST'
+    | 'AI_ACTION_PROPOSED'
+    | 'AI_ACTION_CONFIRMED'
+    | 'AI_ACTION_CANCELLED'
+    | 'AI_ACTION_EXECUTED'
+    | 'AI_FINANCIAL_QUERY'
+    | 'AI_CROSS_BRANCH_DENIED'
+    | 'AI_PROMPT_INJECTION_BLOCKED';
+  targetType: 'USER' | 'ROLE' | 'SESSION' | 'SYSTEM' | 'BRANCH' | 'ACADEMIC' | 'STUDENT' | 'ENROLLMENT' | 'GUARDIAN' | 'TEACHER' | 'TIMETABLE' | 'PERIOD' | 'ROOM' | 'ATTENDANCE' | 'FEE_STRUCTURE' | 'FEE_ASSIGNMENT' | 'INVOICE' | 'PAYMENT' | 'REFUND' | 'FINANCE' | 'REPORT' | 'SEARCH' | 'AI' | 'AI_TOOL' | 'AI_ACTION';
   targetId?: string;
   targetIdentifier?: string;
   branchContext?: string;
   result: 'SUCCESS' | 'DENIED' | 'FAILED';
   details: string;
+  category?: string;
+  severity?: 'INFO' | 'SUCCESS' | 'WARNING' | 'ERROR' | 'SECURITY';
+  previousState?: any;
+  newState?: any;
+  reason?: string;
+  metadata?: Record<string, any>;
   ipAddress?: string;
 }

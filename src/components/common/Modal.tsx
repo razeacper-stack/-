@@ -8,7 +8,8 @@ export interface ModalProps {
   subtitle?: React.ReactNode;
   children: React.ReactNode;
   footer?: React.ReactNode;
-  maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl';
+  maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | '6xl' | 'full';
+  size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | '6xl' | 'full';
 }
 
 export const Modal: React.FC<ModalProps> = ({
@@ -18,8 +19,10 @@ export const Modal: React.FC<ModalProps> = ({
   subtitle,
   children,
   footer,
-  maxWidth = 'lg',
+  maxWidth,
+  size,
 }) => {
+  const effectiveSize = size || maxWidth || 'lg';
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && isOpen) {
@@ -38,12 +41,17 @@ export const Modal: React.FC<ModalProps> = ({
 
   if (!isOpen) return null;
 
-  const maxWidthStyles = {
+  const maxWidthStyles: Record<string, string> = {
     sm: 'max-w-sm',
     md: 'max-w-md',
     lg: 'max-w-lg',
     xl: 'max-w-xl',
     '2xl': 'max-w-2xl',
+    '3xl': 'max-w-3xl',
+    '4xl': 'max-w-4xl',
+    '5xl': 'max-w-5xl',
+    '6xl': 'max-w-6xl',
+    full: 'max-w-(--breakpoint-2xl)',
   };
 
   return (
@@ -57,7 +65,7 @@ export const Modal: React.FC<ModalProps> = ({
       {/* Modal Surface */}
       <div
         className={`
-          relative w-full ${maxWidthStyles[maxWidth]}
+          relative w-full ${maxWidthStyles[effectiveSize] || 'max-w-lg'}
           bg-white dark:bg-slate-900
           border border-slate-200 dark:border-slate-800
           rounded-2xl shadow-xl

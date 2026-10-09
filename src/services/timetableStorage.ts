@@ -511,13 +511,13 @@ export class TimetableStorageService {
     teacherStorage.initialize();
 
     if (!localStorage.getItem(TIMETABLE_PERIODS_STORAGE_KEY)) {
-      localStorage.setItem(TIMETABLE_PERIODS_STORAGE_KEY, JSON.stringify(SEEDED_PERIODS));
+      localStorage.setItem(TIMETABLE_PERIODS_STORAGE_KEY, JSON.stringify([]));
     }
     if (!localStorage.getItem(TIMETABLE_ROOMS_STORAGE_KEY)) {
-      localStorage.setItem(TIMETABLE_ROOMS_STORAGE_KEY, JSON.stringify(SEEDED_ROOMS));
+      localStorage.setItem(TIMETABLE_ROOMS_STORAGE_KEY, JSON.stringify([]));
     }
     if (!localStorage.getItem(TIMETABLE_ENTRIES_STORAGE_KEY)) {
-      localStorage.setItem(TIMETABLE_ENTRIES_STORAGE_KEY, JSON.stringify(SEEDED_TIMETABLE_ENTRIES));
+      localStorage.setItem(TIMETABLE_ENTRIES_STORAGE_KEY, JSON.stringify([]));
     }
     if (!localStorage.getItem(TIMETABLE_DAYS_CONFIG_STORAGE_KEY)) {
       localStorage.setItem(TIMETABLE_DAYS_CONFIG_STORAGE_KEY, JSON.stringify(DEFAULT_BRANCH_DAYS_CONFIG));

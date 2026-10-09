@@ -3,127 +3,164 @@ import {
   UserPlus,
   CreditCard,
   ClipboardCheck,
+  CalendarDays,
   Clock,
+  ShieldAlert,
   ArrowRight,
   ArrowLeft,
+  Activity,
+  Layers,
 } from 'lucide-react';
-import { useTranslation } from '../../context/LanguageContext';
 import { Card } from '../common/Card';
 import { Badge } from '../common/Badge';
+import { DashboardActivityItem } from '../../types/dashboard';
+import { useTranslation } from '../../context/LanguageContext';
 
 export interface RecentActivityProps {
+  activities: DashboardActivityItem[];
   onViewAll?: () => void;
 }
 
-export const RecentActivity: React.FC<RecentActivityProps> = ({ onViewAll }) => {
+export const RecentActivity: React.FC<RecentActivityProps> = ({
+  activities,
+  onViewAll,
+}) => {
   const { direction, t } = useTranslation();
   const ArrowIcon = direction === 'rtl' ? ArrowLeft : ArrowRight;
 
-  const activities = [
-    {
-      id: 'act-1',
-      title: t('dashboard.recent.student_registered'),
-      module: 'students',
-      time: '09:20 AM',
-      date: 'اليوم / Today',
-      icon: UserPlus,
-      iconColor: 'text-blue-600 dark:text-blue-400',
-      iconBg: 'bg-blue-50 dark:bg-blue-950/60',
-      badge: 'تسجيل جديد',
-      badgeVariant: 'primary' as const,
-    },
-    {
-      id: 'act-2',
-      title: t('dashboard.recent.fee_collected'),
-      module: 'fees',
-      time: '08:45 AM',
-      date: 'اليوم / Today',
-      icon: CreditCard,
-      iconColor: 'text-emerald-600 dark:text-emerald-400',
-      iconBg: 'bg-emerald-50 dark:bg-emerald-950/60',
-      badge: 'سند قبض',
-      badgeVariant: 'success' as const,
-    },
-    {
-      id: 'act-3',
-      title: t('dashboard.recent.attendance_completed'),
-      module: 'attendance',
-      time: '08:15 AM',
-      date: 'اليوم / Today',
-      icon: ClipboardCheck,
-      iconColor: 'text-amber-600 dark:text-amber-400',
-      iconBg: 'bg-amber-50 dark:bg-amber-950/60',
-      badge: 'حضور يومي',
-      badgeVariant: 'warning' as const,
-    },
-    {
-      id: 'act-4',
-      title: t('dashboard.recent.temporary_teacher_logged'),
-      module: 'teachers',
-      time: 'أمس 01:30 PM',
-      date: 'الأمس / Yesterday',
-      icon: Clock,
-      iconColor: 'text-purple-600 dark:text-purple-400',
-      iconBg: 'bg-purple-50 dark:bg-purple-950/60',
-      badge: 'معلم حصة',
-      badgeVariant: 'info' as const,
-    },
-  ];
+  const getActivityIcon = (type: DashboardActivityItem['type']) => {
+    switch (type) {
+      case 'student':
+        return {
+          icon: UserPlus,
+          color: 'text-blue-600 dark:text-blue-400',
+          bg: 'bg-blue-50 dark:bg-blue-950/60',
+        };
+      case 'teacher':
+        return {
+          icon: Clock,
+          color: 'text-purple-600 dark:text-purple-400',
+          bg: 'bg-purple-50 dark:bg-purple-950/60',
+        };
+      case 'attendance':
+        return {
+          icon: ClipboardCheck,
+          color: 'text-emerald-600 dark:text-emerald-400',
+          bg: 'bg-emerald-50 dark:bg-emerald-950/60',
+        };
+      case 'finance':
+        return {
+          icon: CreditCard,
+          color: 'text-amber-600 dark:text-amber-400',
+          bg: 'bg-amber-50 dark:bg-amber-950/60',
+        };
+      case 'timetable':
+        return {
+          icon: CalendarDays,
+          color: 'text-indigo-600 dark:text-indigo-400',
+          bg: 'bg-indigo-50 dark:bg-indigo-950/60',
+        };
+      case 'academic':
+        return {
+          icon: Layers,
+          color: 'text-sky-600 dark:text-sky-400',
+          bg: 'bg-sky-50 dark:bg-sky-950/60',
+        };
+      case 'system':
+      default:
+        return {
+          icon: ShieldAlert,
+          color: 'text-slate-600 dark:text-slate-400',
+          bg: 'bg-slate-50 dark:bg-slate-800',
+        };
+    }
+  };
 
   return (
     <Card
-      title={t('dashboard.recent.title')}
-      subtitle="سجل فوري للعمليات التعليمية والمالية والإدارية"
+      title={
+        <div className="flex items-center gap-2">
+          <Activity className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+          <span className="font-bold text-slate-900 dark:text-slate-100">
+            سجل العمليات والنشاطات الأخيرة
+          </span>
+        </div>
+      }
+      subtitle="سجل فوري وموثق لكافة العمليات التعليمية والإدارية والمالية المنفذة"
       action={
-        <button
-          onClick={onViewAll}
-          className="text-xs font-medium text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1 cursor-pointer"
-        >
-          <span>{t('dashboard.recent.view_all_audit')}</span>
-          <ArrowIcon className="w-3.5 h-3.5" />
-        </button>
+        onViewAll && (
+          <button
+            onClick={onViewAll}
+            className="text-xs font-medium text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1 cursor-pointer"
+          >
+            <span>عرض السجل الكامل</span>
+            <ArrowIcon className="w-3.5 h-3.5" />
+          </button>
+        )
       }
     >
-      <div className="overflow-x-auto">
-        <table className="w-full text-xs sm:text-sm text-start">
-          <thead>
-            <tr className="border-b border-slate-100 dark:border-slate-800 text-[11px] font-semibold text-slate-400 uppercase">
-              <th className="pb-3 text-start">{t('common.actions')}</th>
-              <th className="pb-3 text-start">{t('common.status')}</th>
-              <th className="pb-3 text-end">{t('common.date')}</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-slate-100 dark:divide-slate-800/80">
-            {activities.map((act) => {
-              const Icon = act.icon;
+      <div className="space-y-3">
+        {activities.length === 0 ? (
+          <div className="text-center py-8 text-xs text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/40 rounded-xl">
+            لا توجد نشاطات مسجلة في سجل النظام حتى الآن
+          </div>
+        ) : (
+          <div className="space-y-2.5 max-h-80 overflow-y-auto pr-1">
+            {activities.map((item) => {
+              const { icon: Icon, color, bg } = getActivityIcon(item.type);
               return (
-                <tr
-                  key={act.id}
-                  className="hover:bg-slate-50/80 dark:hover:bg-slate-800/50 transition-colors"
+                <div
+                  key={item.id}
+                  className="flex items-start justify-between p-2.5 rounded-xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-800/70 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors gap-3"
                 >
-                  <td className="py-3.5 pe-4">
-                    <div className="flex items-center gap-3">
-                      <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${act.iconBg} ${act.iconColor}`}>
-                        <Icon className="w-4 h-4" />
-                      </div>
-                      <span className="font-medium text-slate-800 dark:text-slate-200">
-                        {act.title}
-                      </span>
+                  <div className="flex items-start gap-2.5">
+                    <div className={`p-2 rounded-xl shrink-0 ${bg} ${color}`}>
+                      <Icon className="w-4 h-4" />
                     </div>
-                  </td>
-                  <td className="py-3.5 pe-4">
-                    <Badge variant={act.badgeVariant} size="sm">
-                      {act.badge}
+                    <div className="space-y-0.5">
+                      <div className="flex items-center gap-1.5 flex-wrap">
+                        <span className="text-xs font-semibold text-slate-900 dark:text-slate-100">
+                          {item.actorName}
+                        </span>
+                        <span className="text-[11px] text-slate-500 font-mono">
+                          ({item.action})
+                        </span>
+                        {item.targetIdentifier && (
+                          <Badge variant="neutral" size="sm" className="text-[10px] py-0 px-1 font-mono">
+                            {item.targetIdentifier}
+                          </Badge>
+                        )}
+                      </div>
+                      <p className="text-xs text-slate-600 dark:text-slate-400 leading-snug">
+                        {item.details}
+                      </p>
+                      <div className="flex items-center gap-2 text-[10px] text-slate-400 pt-0.5">
+                        <span>{item.branchNameAr}</span>
+                        <span>&bull;</span>
+                        <span>{item.timeAgo}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="shrink-0 self-start">
+                    <Badge
+                      variant={
+                        item.result === 'SUCCESS'
+                          ? 'success'
+                          : item.result === 'DENIED'
+                          ? 'danger'
+                          : 'warning'
+                      }
+                      size="sm"
+                    >
+                      {item.result === 'SUCCESS' ? 'ناجح' : item.result === 'DENIED' ? 'مرفوض' : 'معلق'}
                     </Badge>
-                  </td>
-                  <td className="py-3.5 text-end text-slate-400 dark:text-slate-500 font-mono text-xs tabular-nums whitespace-nowrap">
-                    {act.time}
-                  </td>
-                </tr>
+                  </div>
+                </div>
               );
             })}
-          </tbody>
-        </table>
+          </div>
+        )}
       </div>
     </Card>
   );

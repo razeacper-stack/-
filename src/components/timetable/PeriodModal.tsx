@@ -283,7 +283,7 @@ export const PeriodModal: React.FC<PeriodModalProps> = ({ isOpen, onClose, branc
                 className={`p-3 flex items-center justify-between transition-colors ${
                   p.isBreak
                     ? 'bg-amber-50/50 dark:bg-amber-950/20'
-                    : 'bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-850'
+                    : 'bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800'
                 }`}
               >
                 <div className="flex items-center gap-3">

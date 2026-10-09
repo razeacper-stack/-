@@ -58,11 +58,13 @@ export const en: Record<string, string> = {
   'nav.attendance': 'Attendance & Absences',
   'nav.fees': 'Fees & Dues',
   'nav.reports': 'Reports & Analytics',
+  'nav.search': 'Global Search',
   'nav.users': 'Users Management',
   'nav.roles': 'Roles & Permissions Matrix',
+  'nav.notifications': 'Notifications & Alerts',
   'nav.ai_assistant': 'AI School Assistant',
   'nav.settings': 'System Settings',
-  'nav.audit_logs': 'Audit Logs',
+  'nav.audit_logs': 'Activity & Audit Center',
 
   // Categories in navigation
   'nav.group.main': 'Main',
@@ -183,4 +185,10 @@ export const en: Record<string, string> = {
   'teachers.stats.archived': 'Archived',
   'teachers.stats.full_time': 'Full-Time',
   'teachers.stats.temporary': 'Per-Lesson / Hourly',
+
+  // Settings
+  'settings.title': 'General System Settings',
+  'settings.subtitle': 'Configure institutional branding, active academic parameters, and system policies',
+  'settings.save': 'Save Settings',
+  'settings.back': 'Back to Dashboard',
 };

@@ -9,6 +9,8 @@ import {
 import { NAVIGATION_CONFIG, NavItem } from '../../config/navigation';
 import { useTranslation } from '../../context/LanguageContext';
 import { useBranch } from '../../context/BranchContext';
+import { useAuth } from '../../context/AuthContext';
+import { notificationStorage } from '../../services/notificationStorage';
 
 export interface SidebarProps {
   currentTab: string;
@@ -24,8 +26,23 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onCloseMobile,
 }) => {
   const { language, direction, t } = useTranslation();
-  const { activeBranch, isAllBranches } = useBranch();
+  const { activeBranch, activeBranchId, isAllBranches } = useBranch();
+  const { isSuperAdmin, hasPermission, currentUser } = useAuth();
   const ArrowIcon = direction === 'rtl' ? ChevronLeft : ChevronRight;
+
+  const [unreadNotificationsCount, setUnreadNotificationsCount] = React.useState(0);
+
+  React.useEffect(() => {
+    const updateCount = () => {
+      if (currentUser) {
+        const branchContext = activeBranchId === 'all' ? undefined : activeBranchId;
+        setUnreadNotificationsCount(notificationStorage.getUnreadCount(currentUser, branchContext));
+      }
+    };
+    updateCount();
+    window.addEventListener('sms_notifications_updated', updateCount);
+    return () => window.removeEventListener('sms_notifications_updated', updateCount);
+  }, [currentUser, activeBranchId]);
 
   const handleNavClick = (item: NavItem) => {
     onSelectTab(item.id);
@@ -47,11 +64,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
               {t('app.name')}
             </h1>
             <span className="text-[11px] font-medium text-blue-600 dark:text-blue-400 mt-0.5 inline-block">
-              {isAllBranches
+              {activeBranch
+                ? language === 'ar' ? activeBranch.nameAr : activeBranch.nameEn
+                : isAllBranches
                 ? t('branch.all')
-                : language === 'ar'
-                ? activeBranch?.nameAr
-                : activeBranch?.nameEn}
+                : language === 'ar' ? 'بدون مدرسة مسجلة' : 'No Schools'}
             </span>
           </div>
         </div>
@@ -73,8 +90,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
               {t(group.labelKey)}
             </div>
 
-            {group.items.map((item) => {
-              const Icon = item.icon;
+            {group.items
+              .filter((item) => {
+                if (item.id === 'settings') {
+                  return isSuperAdmin || hasPermission('settings.view');
+                }
+                return true;
+              })
+              .map((item) => {
+                const Icon = item.icon;
               const isActive = currentTab === item.id;
               const isPhase1 = item.phase === 1;
 
@@ -104,11 +128,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   </div>
 
                   <div className="flex items-center gap-1.5">
-                    {item.badge && (
+                    {item.id === 'notifications' && unreadNotificationsCount > 0 ? (
+                      <span className="text-[10px] font-extrabold px-1.5 py-0.5 rounded-full bg-rose-500 text-white shadow-xs animate-bounce">
+                        {unreadNotificationsCount > 99 ? '99+' : unreadNotificationsCount}
+                      </span>
+                    ) : item.badge ? (
                       <span className="text-[10px] font-medium px-1.5 py-0.5 rounded-md bg-blue-100 dark:bg-blue-900/80 text-blue-700 dark:text-blue-300">
                         {item.badge}
                       </span>
-                    )}
+                    ) : null}
                     {isPhase1 ? (
                       <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded-md bg-emerald-100 dark:bg-emerald-950/70 text-emerald-700 dark:text-emerald-300">
                         Phase 1

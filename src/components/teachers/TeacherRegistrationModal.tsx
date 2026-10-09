@@ -50,7 +50,7 @@ export const TeacherRegistrationModal: React.FC<TeacherRegistrationModalProps> =
   const defaultBranch =
     activeBranchId && activeBranchId !== 'all'
       ? activeBranchId
-      : availableBranches[0]?.id || 'branch-riyadh';
+      : availableBranches[0]?.id || '';
 
   // Form State
   const [selectedBranchId, setSelectedBranchId] = useState<string>(defaultBranch);

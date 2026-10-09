@@ -33,7 +33,10 @@ import {
   Layers,
   School,
   XCircle,
+  DollarSign,
 } from 'lucide-react';
+import { financeStorage } from '../../services/financeStorage';
+import { formatCurrency } from '../../utils/currency';
 
 interface StudentProfileModalProps {
   isOpen: boolean;
@@ -51,9 +54,9 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
   onOpenTransfer,
 }) => {
   const { changeStudentStatus, archiveStudent, addGuardian } = useStudents();
-  const { hasPermission } = useAuth();
+  const { hasPermission, currentUser } = useAuth();
 
-  const [activeTab, setActiveTab] = useState<'profile' | 'academic' | 'guardians' | 'lifecycle'>('profile');
+  const [activeTab, setActiveTab] = useState<'profile' | 'academic' | 'guardians' | 'lifecycle' | 'finance'>('profile');
   const [showNationalId, setShowNationalId] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [statusReason, setStatusReason] = useState('');
@@ -265,6 +268,19 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
           >
             <Clock className="w-3.5 h-3.5" />
             <span>إدارة الحالة والعمليات</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab('finance')}
+            className={`px-3.5 py-2 text-xs font-medium rounded-t-lg transition-colors flex items-center gap-1.5 whitespace-nowrap ${
+              activeTab === 'finance'
+                ? 'bg-white dark:bg-slate-800 text-blue-600 dark:text-blue-400 border-b-2 border-blue-600 dark:border-blue-400'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+            }`}
+          >
+            <DollarSign className="w-3.5 h-3.5 text-emerald-600" />
+            <span>الملف المالي والرسوم</span>
           </button>
         </div>
 
@@ -778,6 +794,99 @@ export const StudentProfileModal: React.FC<StudentProfileModalProps> = ({
                 </div>
               </div>
             )}
+          </div>
+        )}
+
+        {/* TAB 5: FINANCIAL PROFILE & STATEMENT */}
+        {activeTab === 'finance' && (
+          <div className="space-y-4">
+            {(() => {
+              if (!currentUser) return <div className="text-xs text-slate-500">يرجى تسجيل الدخول لعرض البيانات المالية</div>;
+              try {
+                const stmt = financeStorage.getStudentFinancialStatement(currentUser, student.id);
+                return (
+                  <div className="space-y-4">
+                    {/* Summary Cards */}
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs">
+                      <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/60 dark:border-slate-800">
+                        <div className="text-[11px] text-slate-500">إجمالي المطالبات</div>
+                        <div className="font-mono font-bold text-slate-900 dark:text-slate-100 mt-0.5">
+                          {formatCurrency(stmt.totalNetBilledMinor)}
+                        </div>
+                      </div>
+                      <div className="p-2.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200/60 dark:border-emerald-900">
+                        <div className="text-[11px] text-emerald-700">إجمالي المسدد</div>
+                        <div className="font-mono font-bold text-emerald-700 dark:text-emerald-400 mt-0.5">
+                          {formatCurrency(stmt.netCollectedMinor)}
+                        </div>
+                      </div>
+                      <div className="p-2.5 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200/60 dark:border-amber-900">
+                        <div className="text-[11px] text-amber-700">الرصيد المتبقي</div>
+                        <div className="font-mono font-bold text-amber-700 dark:text-amber-400 mt-0.5">
+                          {formatCurrency(stmt.outstandingBalanceMinor)}
+                        </div>
+                      </div>
+                      <div className="p-2.5 rounded-xl bg-red-50 dark:bg-red-950/30 border border-red-200/60 dark:border-red-900">
+                        <div className="text-[11px] text-red-700">المتأخرات</div>
+                        <div className="font-mono font-bold text-red-700 dark:text-red-400 mt-0.5">
+                          {formatCurrency(stmt.overdueAmountMinor)}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Invoices List */}
+                    <div className="space-y-2">
+                      <div className="text-xs font-bold text-slate-800 dark:text-slate-200">
+                        سجل الفواتير والمطالبات ({stmt.invoices.length})
+                      </div>
+                      {stmt.invoices.length === 0 ? (
+                        <div className="text-[11px] text-slate-400 p-2 text-center bg-slate-50 dark:bg-slate-900 rounded-xl">لا توجد فواتير مسجلة</div>
+                      ) : (
+                        <div className="space-y-1.5 text-xs max-h-40 overflow-y-auto">
+                          {stmt.invoices.map((inv) => (
+                            <div key={inv.id} className="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 flex items-center justify-between">
+                              <div>
+                                <span className="font-mono font-bold text-blue-600">{inv.invoiceNumber}</span>
+                                <span className="text-slate-400 text-[11px] mx-2">| تاريخ: {inv.issueDate}</span>
+                              </div>
+                              <div className="flex items-center gap-3">
+                                <span className="font-mono">{formatCurrency(inv.netTotalMinor)}</span>
+                                <span className="text-amber-600 font-mono font-bold">متبقي: {formatCurrency(inv.balanceDueMinor)}</span>
+                                <Badge variant={inv.status === 'PAID' ? 'success' : 'warning'} size="sm">{inv.status}</Badge>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Payments List */}
+                    <div className="space-y-2">
+                      <div className="text-xs font-bold text-slate-800 dark:text-slate-200">
+                        سندات القبض والمدفوعات ({stmt.payments.length})
+                      </div>
+                      {stmt.payments.length === 0 ? (
+                        <div className="text-[11px] text-slate-400 p-2 text-center bg-slate-50 dark:bg-slate-900 rounded-xl">لا توجد مدفوعات مسجلة</div>
+                      ) : (
+                        <div className="space-y-1.5 text-xs max-h-40 overflow-y-auto">
+                          {stmt.payments.map((p) => (
+                            <div key={p.id} className="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 flex items-center justify-between">
+                              <div>
+                                <span className="font-mono font-bold text-emerald-600">{p.receiptNumber}</span>
+                                <span className="text-slate-400 text-[11px] mx-2">| تاريخ: {p.paymentDate} ({p.method})</span>
+                              </div>
+                              <span className="font-mono font-bold text-emerald-700">{formatCurrency(p.amountMinor)}</span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                );
+              } catch (err: any) {
+                return <div className="text-xs text-red-500">تعذر تحميل البيانات المالية: {err.message}</div>;
+              }
+            })()}
           </div>
         )}
       </div>

@@ -236,52 +236,21 @@ export const LoginPage: React.FC = () => {
             </button>
 
             {showDemoAccounts && (
-              <div className="mt-3 grid grid-cols-2 gap-2 text-start">
+              <div className="mt-3 text-start">
                 <button
                   type="button"
                   onClick={() => fillCredentials('superadmin', 'Admin@123456')}
-                  className="p-2 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-blue-400 dark:hover:border-blue-600 bg-slate-50/60 dark:bg-slate-950/40 text-[11px] transition-all cursor-pointer text-start"
+                  className="w-full p-2.5 rounded-xl border border-blue-200 dark:border-blue-900/60 hover:border-blue-400 dark:hover:border-blue-500 bg-blue-50/40 dark:bg-blue-950/20 text-xs transition-all cursor-pointer text-start flex items-center justify-between"
                 >
-                  <div className="font-bold text-blue-600 dark:text-blue-400">Super Admin</div>
-                  <div className="text-slate-400 text-[10px]">superadmin · كافة الصلاحيات</div>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => fillCredentials('admin', 'Admin@123456')}
-                  className="p-2 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-blue-400 dark:hover:border-blue-600 bg-slate-50/60 dark:bg-slate-950/40 text-[11px] transition-all cursor-pointer text-start"
-                >
-                  <div className="font-bold text-slate-700 dark:text-slate-200">Admin</div>
-                  <div className="text-slate-400 text-[10px]">admin · صلاحيات إدارية</div>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => fillCredentials('teacher', 'Admin@123456')}
-                  className="p-2 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-blue-400 dark:hover:border-blue-600 bg-slate-50/60 dark:bg-slate-950/40 text-[11px] transition-all cursor-pointer text-start"
-                >
-                  <div className="font-bold text-slate-700 dark:text-slate-200">Teacher</div>
-                  <div className="text-slate-400 text-[10px]">teacher · تدريس وحضور فقط</div>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => fillCredentials('viewer', 'Admin@123456')}
-                  className="p-2 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-blue-400 dark:hover:border-blue-600 bg-slate-50/60 dark:bg-slate-950/40 text-[11px] transition-all cursor-pointer text-start"
-                >
-                  <div className="font-bold text-slate-700 dark:text-slate-200">Viewer</div>
-                  <div className="text-slate-400 text-[10px]">viewer · قراءة واطلاع فقط</div>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => fillCredentials('disabled_user', 'Admin@123456')}
-                  className="p-2 rounded-xl border border-amber-200 dark:border-amber-900/60 bg-amber-50/40 dark:bg-amber-950/20 text-[11px] transition-all cursor-pointer text-start col-span-2"
-                >
-                  <div className="font-bold text-amber-700 dark:text-amber-400">
-                    {language === 'ar' ? 'فحص الحساب المعطل (Disabled)' : 'Test Disabled Account'}
+                  <div>
+                    <div className="font-bold text-blue-600 dark:text-blue-400">
+                      {language === 'ar' ? 'حساب مدير النظام الرئيسي (Super Admin)' : 'Root Super Admin Account'}
+                    </div>
+                    <div className="text-slate-500 dark:text-slate-400 text-[11px] mt-0.5">
+                      superadmin · Admin@123456 ({language === 'ar' ? 'لبدء إدخال وتسجيل البيانات من الصفر' : 'To register and input data from scratch'})
+                    </div>
                   </div>
-                  <div className="text-slate-400 text-[10px]">disabled_user · اختبار رفض الدخول للحساب المعطل</div>
+                  <Sparkles className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0" />
                 </button>
               </div>
             )}

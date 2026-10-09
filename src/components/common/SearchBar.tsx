@@ -5,12 +5,14 @@ import { useTranslation } from '../../context/LanguageContext';
 export interface SearchBarProps {
   placeholder?: string;
   onSearch?: (term: string) => void;
+  onClick?: () => void;
   className?: string;
 }
 
 export const SearchBar: React.FC<SearchBarProps> = ({
   placeholder,
   onSearch,
+  onClick,
   className = '',
 }) => {
   const { t } = useTranslation();
@@ -34,6 +36,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
         type="text"
         value={searchTerm}
         onChange={handleChange}
+        onClick={onClick}
         placeholder={placeholder || t('common.search')}
         className={`
           w-full h-10 ps-9 pe-9

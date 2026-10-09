@@ -477,16 +477,16 @@ export class StudentStorageService {
     if (this.initialized) return;
 
     if (!localStorage.getItem(STUDENTS_STORAGE_KEY)) {
-      localStorage.setItem(STUDENTS_STORAGE_KEY, JSON.stringify(SEEDED_STUDENTS));
+      localStorage.setItem(STUDENTS_STORAGE_KEY, JSON.stringify([]));
     }
     if (!localStorage.getItem(GUARDIANS_STORAGE_KEY)) {
-      localStorage.setItem(GUARDIANS_STORAGE_KEY, JSON.stringify(SEEDED_GUARDIANS));
+      localStorage.setItem(GUARDIANS_STORAGE_KEY, JSON.stringify([]));
     }
     if (!localStorage.getItem(STUDENT_GUARDIANS_STORAGE_KEY)) {
-      localStorage.setItem(STUDENT_GUARDIANS_STORAGE_KEY, JSON.stringify(SEEDED_STUDENT_GUARDIANS));
+      localStorage.setItem(STUDENT_GUARDIANS_STORAGE_KEY, JSON.stringify([]));
     }
     if (!localStorage.getItem(ENROLLMENTS_STORAGE_KEY)) {
-      localStorage.setItem(ENROLLMENTS_STORAGE_KEY, JSON.stringify(SEEDED_ENROLLMENTS));
+      localStorage.setItem(ENROLLMENTS_STORAGE_KEY, JSON.stringify([]));
     }
 
     this.initialized = true;
@@ -1522,6 +1522,7 @@ export class StudentStorageService {
     }
 
     if (branchId && branchId !== 'all') {
+      this.checkBranchAccess(actingUser, branchId);
       students = students.filter((s) => s.branchId === branchId);
     }
 

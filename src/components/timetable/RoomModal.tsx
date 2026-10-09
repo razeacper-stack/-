@@ -310,7 +310,7 @@ export const RoomModal: React.FC<RoomModalProps> = ({ isOpen, onClose, branchId 
             branchRooms.map((r) => (
               <div
                 key={r.id}
-                className="p-3 flex items-center justify-between bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-850 transition-colors"
+                className="p-3 flex items-center justify-between bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
               >
                 <div className="flex items-center gap-3">
                   <span className="w-8 h-8 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold font-mono text-xs">

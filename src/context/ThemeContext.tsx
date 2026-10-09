@@ -55,8 +55,12 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     const root = document.documentElement;
     if (resolvedTheme === 'dark') {
       root.classList.add('dark');
+      document.body.classList.add('dark');
+      root.style.colorScheme = 'dark';
     } else {
       root.classList.remove('dark');
+      document.body.classList.remove('dark');
+      root.style.colorScheme = 'light';
     }
   }, [theme, resolvedTheme]);
 
@@ -65,7 +69,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   };
 
   const toggleTheme = () => {
-    setThemeState((prev) => (prev === 'dark' ? 'light' : 'dark'));
+    setThemeState(resolvedTheme === 'dark' ? 'light' : 'dark');
   };
 
   return (

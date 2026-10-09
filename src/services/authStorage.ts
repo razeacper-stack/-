@@ -158,7 +158,7 @@ export class AuthStorageService {
     const usersToSeed = [
       {
         id: 'user-super-admin',
-        fullName: 'د. عبدالرحمن العتيبي (Super Admin)',
+        fullName: 'المدير العام للنظام (Super Admin)',
         username: 'superadmin',
         email: 'superadmin@schoolms.edu',
         roleId: 'role-super-admin',
@@ -167,72 +167,6 @@ export class AuthStorageService {
         isProtectedSuperAdmin: true,
         hasAllBranchesAccess: true,
         branchIds: [],
-      },
-      {
-        id: 'user-admin',
-        fullName: 'أ. فهد الشمري (Admin)',
-        username: 'admin',
-        email: 'admin@schoolms.edu',
-        roleId: 'role-admin',
-        roleCode: 'ADMIN',
-        status: 'active' as const,
-        hasAllBranchesAccess: false,
-        branchIds: ['branch-riyadh', 'branch-jeddah'],
-      },
-      {
-        id: 'user-manager',
-        fullName: 'أ. منى الغامدي (Manager)',
-        username: 'manager',
-        email: 'manager@schoolms.edu',
-        roleId: 'role-manager',
-        roleCode: 'MANAGER',
-        status: 'active' as const,
-        hasAllBranchesAccess: false,
-        branchIds: ['branch-riyadh'],
-      },
-      {
-        id: 'user-teacher',
-        fullName: 'أ. خالد الشريف (Teacher)',
-        username: 'teacher',
-        email: 'teacher@schoolms.edu',
-        roleId: 'role-teacher',
-        roleCode: 'TEACHER',
-        status: 'active' as const,
-        hasAllBranchesAccess: false,
-        branchIds: ['branch-jeddah'],
-      },
-      {
-        id: 'user-staff',
-        fullName: 'سارة القحطاني (Staff)',
-        username: 'staff',
-        email: 'staff@schoolms.edu',
-        roleId: 'role-staff',
-        roleCode: 'STAFF',
-        status: 'active' as const,
-        hasAllBranchesAccess: false,
-        branchIds: ['branch-dammam'],
-      },
-      {
-        id: 'user-viewer',
-        fullName: 'عبدالله الزهراني (Viewer)',
-        username: 'viewer',
-        email: 'viewer@schoolms.edu',
-        roleId: 'role-viewer',
-        roleCode: 'VIEWER',
-        status: 'active' as const,
-        hasAllBranchesAccess: false,
-        branchIds: ['branch-riyadh'],
-      },
-      {
-        id: 'user-disabled-sample',
-        fullName: 'طارق السعيد (حساب معطل تجريبي)',
-        username: 'disabled_user',
-        email: 'disabled@schoolms.edu',
-        roleId: 'role-staff',
-        roleCode: 'STAFF',
-        status: 'disabled' as const,
-        hasAllBranchesAccess: false,
-        branchIds: ['branch-dammam'],
       },
     ];
 
@@ -294,9 +228,9 @@ export class AuthStorageService {
         timestamp: new Date().toISOString(),
       };
 
-      // Keep latest 200 logs
+      // Keep latest 1000 logs
       logs.unshift(newLog);
-      if (logs.length > 200) logs.pop();
+      if (logs.length > 1000) logs.pop();
 
       localStorage.setItem(AUDIT_STORAGE_KEY, JSON.stringify(logs));
     } catch (e) {

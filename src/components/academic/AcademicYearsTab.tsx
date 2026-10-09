@@ -38,7 +38,7 @@ export const AcademicYearsTab: React.FC = () => {
 
   // Form states
   const [createForm, setCreateForm] = useState({
-    branchId: activeBranchId && activeBranchId !== 'all' ? activeBranchId : 'branch-riyadh',
+    branchId: activeBranchId && activeBranchId !== 'all' ? activeBranchId : (branches[0]?.id || ''),
     nameAr: '',
     nameEn: '',
     startDate: '',
@@ -74,7 +74,7 @@ export const AcademicYearsTab: React.FC = () => {
   }, [years, searchTerm, statusFilter]);
 
   const handleOpenCreate = () => {
-    const targetBranch = activeBranchId && activeBranchId !== 'all' ? activeBranchId : branches[0]?.id || 'branch-riyadh';
+    const targetBranch = activeBranchId && activeBranchId !== 'all' ? activeBranchId : (branches[0]?.id || '');
     setCreateForm({
       branchId: targetBranch,
       nameAr: '',

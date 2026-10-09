@@ -517,22 +517,22 @@ export class AcademicStorageService {
     if (this.initialized) return;
 
     if (!localStorage.getItem(ACADEMIC_YEARS_STORAGE_KEY)) {
-      localStorage.setItem(ACADEMIC_YEARS_STORAGE_KEY, JSON.stringify(SEEDED_YEARS));
+      localStorage.setItem(ACADEMIC_YEARS_STORAGE_KEY, JSON.stringify([]));
     }
     if (!localStorage.getItem(ACADEMIC_STAGES_STORAGE_KEY)) {
-      localStorage.setItem(ACADEMIC_STAGES_STORAGE_KEY, JSON.stringify(SEEDED_STAGES));
+      localStorage.setItem(ACADEMIC_STAGES_STORAGE_KEY, JSON.stringify([]));
     }
     if (!localStorage.getItem(GRADES_STORAGE_KEY)) {
-      localStorage.setItem(GRADES_STORAGE_KEY, JSON.stringify(SEEDED_GRADES));
+      localStorage.setItem(GRADES_STORAGE_KEY, JSON.stringify([]));
     }
     if (!localStorage.getItem(CLASSES_STORAGE_KEY)) {
-      localStorage.setItem(CLASSES_STORAGE_KEY, JSON.stringify(SEEDED_CLASSES));
+      localStorage.setItem(CLASSES_STORAGE_KEY, JSON.stringify([]));
     }
     if (!localStorage.getItem(SUBJECTS_STORAGE_KEY)) {
-      localStorage.setItem(SUBJECTS_STORAGE_KEY, JSON.stringify(SEEDED_SUBJECTS));
+      localStorage.setItem(SUBJECTS_STORAGE_KEY, JSON.stringify([]));
     }
     if (!localStorage.getItem(GRADE_SUBJECTS_STORAGE_KEY)) {
-      localStorage.setItem(GRADE_SUBJECTS_STORAGE_KEY, JSON.stringify(SEEDED_GRADE_SUBJECTS));
+      localStorage.setItem(GRADE_SUBJECTS_STORAGE_KEY, JSON.stringify([]));
     }
 
     this.initialized = true;
@@ -2017,8 +2017,7 @@ export class AcademicStorageService {
 
     // 'all' aggregates
     const accessibleBranchIds =
-      actingUser.roleCode === 'SUPER_ADMIN' ||
-      actingUser.isProtectedSuperAdmin ||
+      authStorage.isSuperAdmin(actingUser) ||
       actingUser.hasAllBranchesAccess
         ? null
         : actingUser.branchIds;

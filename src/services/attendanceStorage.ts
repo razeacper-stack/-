@@ -193,10 +193,10 @@ export class AttendanceStorageService {
     if (this.initialized) return;
 
     if (!localStorage.getItem(ATTENDANCE_RECORDS_STORAGE_KEY)) {
-      localStorage.setItem(ATTENDANCE_RECORDS_STORAGE_KEY, JSON.stringify(SEEDED_ATTENDANCE_RECORDS));
+      localStorage.setItem(ATTENDANCE_RECORDS_STORAGE_KEY, JSON.stringify([]));
     }
     if (!localStorage.getItem(ATTENDANCE_SESSIONS_STORAGE_KEY)) {
-      localStorage.setItem(ATTENDANCE_SESSIONS_STORAGE_KEY, JSON.stringify(SEEDED_ATTENDANCE_SESSIONS));
+      localStorage.setItem(ATTENDANCE_SESSIONS_STORAGE_KEY, JSON.stringify([]));
     }
 
     this.initialized = true;

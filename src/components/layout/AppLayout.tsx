@@ -11,6 +11,11 @@ export interface AppLayoutProps {
   breadcrumbs?: BreadcrumbItem[];
   onOpenTestModal: () => void;
   onOpenProfileModal?: () => void;
+  onOpenSearchModal?: () => void;
+  onOpenAIModal?: () => void;
+  onOpenPhase12Modal?: () => void;
+  onOpenPhase13Modal?: () => void;
+  onOpenNotificationCenter?: () => void;
 }
 
 export const AppLayout: React.FC<AppLayoutProps> = ({
@@ -20,6 +25,11 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
   breadcrumbs,
   onOpenTestModal,
   onOpenProfileModal,
+  onOpenSearchModal,
+  onOpenAIModal,
+  onOpenPhase12Modal,
+  onOpenPhase13Modal,
+  onOpenNotificationCenter,
 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { direction } = useTranslation();
@@ -41,6 +51,12 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
           onToggleMobileMenu={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           onOpenTestModal={onOpenTestModal}
           onOpenProfileModal={onOpenProfileModal}
+          onOpenSearchModal={onOpenSearchModal}
+          onOpenAIModal={onOpenAIModal}
+          onOpenPhase12Modal={onOpenPhase12Modal}
+          onOpenPhase13Modal={onOpenPhase13Modal}
+          onOpenNotificationCenter={onOpenNotificationCenter}
+          onNavigateTab={onSelectTab}
         />
 
         {/* Subheader / Breadcrumbs bar */}

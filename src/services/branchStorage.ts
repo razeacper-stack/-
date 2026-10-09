@@ -111,7 +111,7 @@ export class BranchStorageService {
     try {
       const stored = localStorage.getItem(BRANCHES_STORAGE_KEY);
       if (!stored) {
-        localStorage.setItem(BRANCHES_STORAGE_KEY, JSON.stringify(SEEDED_BRANCHES));
+        localStorage.setItem(BRANCHES_STORAGE_KEY, JSON.stringify([]));
       }
     } catch (e) {
       console.error('Error initializing branches storage', e);
@@ -189,6 +189,10 @@ export class BranchStorageService {
     } catch {
       return SEEDED_BRANCHES;
     }
+  }
+
+  public getRawBranches(): Branch[] {
+    return this.getStoredBranches();
   }
 
   private saveBranches(branches: Branch[]): void {
